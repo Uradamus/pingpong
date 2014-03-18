@@ -51,12 +51,10 @@ function love.load()
     --[[ Starting values ]]--
     pad_y = 290
     
-    ball_pos = {
-        Vector(400, 325),
-        Vector(400, 325),
-        Vector(400, 325),
-        Vector(400, 325)
-    }
+    ball_pos = {}
+    for i = 1, 4, 1 do
+        ball_pos[i] = Vector(400, 325)
+    end
     ball_vel = Vector(0, 0)
     start_vel = Vector(-1, 0)
     
