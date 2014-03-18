@@ -39,18 +39,10 @@ function love.load()
     --[[ Text Image Quads ]]--
     -- Anonymous Pro font used for text graphics. ( http://www.marksimonson.com/fonts/view/anonymous-pro )
     img = love.graphics.newImage("text.png")
-    numbers = {
-        love.graphics.newQuad(0, 0, 25, 36, 256, 128),
-        love.graphics.newQuad(25, 0, 25, 36, 256, 128),
-        love.graphics.newQuad(50, 0, 25, 36, 256, 128),
-        love.graphics.newQuad(75, 0, 25, 36, 256, 128),
-        love.graphics.newQuad(100, 0, 25, 36, 256, 128),
-        love.graphics.newQuad(125, 0, 25, 36, 256, 128),
-        love.graphics.newQuad(150, 0, 25, 36, 256, 128),
-        love.graphics.newQuad(175, 0, 25, 36, 256, 128),
-        love.graphics.newQuad(200, 0, 25, 36, 256, 128),
-        love.graphics.newQuad(225, 0, 25, 36, 256, 128)
-    }
+    numbers = {}
+    for i = 0, 9, 1 do
+        numbers[i+1] = love.graphics.newQuad(i*25, 0, 25, 36, 256, 128)
+    end
     score_label = love.graphics.newQuad(115, 36, 137, 34, 256, 128)
     high_label = love.graphics.newQuad(0, 36, 112, 34, 256, 128)
     game_over_label = love.graphics.newQuad(0, 73, 219, 34, 256, 128)
@@ -174,8 +166,8 @@ function love.draw()
         love.graphics.draw(img, game_over_label, 290, 150)
     end
     
-    love.graphics.setColor(240, 235, 100)
     if pause == true then
+        love.graphics.setColor(240, 235, 100)
         love.graphics.draw(img, instruction_label, 278, 200)
     end
     
