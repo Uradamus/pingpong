@@ -1,6 +1,7 @@
 PingPong
 
-A simple Pong clone created for the Minify Game Jam #1 (http://minifygamejam.github.io/)
+A simple Pong clone created for the Minify Game Jam #1.
+http://minifygamejam.github.io/
 
 
 I used the following tools and assets to make this game:
@@ -14,10 +15,10 @@ http://vrld.github.io/hump/
 Bfxr - an online sound effects generator.
 http://www.bfxr.net/
 
-Inkscape - 2D vector design program
+Inkscape - 2D vector design program.
 http://www.inkscape.org/
 
-Anonymous Pro - A monospace font created by Mark Simonson
+Anonymous Pro - A monospace font created by Mark Simonson.
 http://www.marksimonson.com/info/anonymous-pro-usage-notes
 
 
