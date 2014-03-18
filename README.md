@@ -1,19 +1,24 @@
 PingPong
 
-A simple Pong clone created for the Minify Game Jam #1 ( http://minifygamejam.github.io/ )
+A simple Pong clone created for the Minify Game Jam #1 (http://minifygamejam.github.io/)
 
 
 I used the following tools and assets to make this game:
 
-LÖVE 0.9.0 - 2D game engine; this is needed to run the game. ( http://love2d.org/ )
+LÖVE 0.9.0 - 2D game engine; this is needed to run the game.
+http://love2d.org/
 
-hump.vector - Vector library for LÖVE, included in the game's repo as "vector.lua". ( http://vrld.github.io/hump/ )
+hump.vector - Vector library for LÖVE, included as "vector.lua".
+http://vrld.github.io/hump/
 
-Bfxr - an online sound effects generator. ( http://www.bfxr.net/ )
+Bfxr - an online sound effects generator.
+http://www.bfxr.net/
 
-Inkscape - 2D vector design program ( http://www.inkscape.org/ )
+Inkscape - 2D vector design program
+http://www.inkscape.org/
 
-Anonymous Pro - A set of monospaced fonts created by Mark Simonson ( http://www.marksimonson.com/info/anonymous-pro-usage-notes )
+Anonymous Pro - A monospace font created by Mark Simonson
+http://www.marksimonson.com/info/anonymous-pro-usage-notes
 
 
 License:
