@@ -72,10 +72,10 @@ end
 function love.update(dt)
     --[[ Input ]]--
     if love.keyboard.isDown("w", "up") and (pad_y > 60) then
-        pad_y = pad_y - 250 * dt
+        pad_y = pad_y - 300 * dt
     end
     if love.keyboard.isDown("s", "down") and (pad_y < 520) then
-        pad_y = pad_y + 250 * dt
+        pad_y = pad_y + 300 * dt
     end
     if love.keyboard.isDown(" ") and ball_vel == Vector(0, 0) then
         pause = false
@@ -174,7 +174,7 @@ function love.draw()
     love.graphics.draw(img, high_label, 570, 11)
     
     for i = 1, 4, 1 do
-        love.graphics.draw(img, numbers[point_array[i]+1], 375+(i*25), 10)
+        love.graphics.draw(img, numbers[point_array[i]+1], 370+(i*25), 10)
         love.graphics.draw(img, numbers[high_array[i]+1], 665+(i*25), 10)
     end
 end
