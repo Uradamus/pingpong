@@ -24,7 +24,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 ]]
 
 function love.load()
-    -- Uses HUMP's vector library. ( http://vrld.github.io/hump/ )
+    -- Uses hump's vector library. ( http://vrld.github.io/hump/ )
     Vector = require "vector"
     
     love.window.setTitle("Ping Pong")
@@ -49,6 +49,9 @@ function love.load()
     instruction_label = love.graphics.newQuad(0, 107, 244, 19, 256, 128)
     
     --[[ Starting values ]]--
+    pause = true
+    game_over = false
+    
     pad_y = 290
     
     ball_pos = {}
@@ -61,11 +64,20 @@ function love.load()
     balls = 3
     points = 0
     point_array = {0, 0, 0, 0}
-    high_score = 0
-    high_array = {0, 0, 0, 0}
     
-    pause = true
-    game_over = false
+    -- High score file
+    hs_file = love.filesystem.newFile("high_score.txt")
+    hs_file:open("r")
+    high_score = hs_file:read(all)
+    hs_file:close()
+    high_score = tonumber(high_score)
+    if high_score == nil then
+        high_score = 0
+        hs_file:open("w")
+        hs_file:write(high_score)
+        hs_file:close()
+    end
+    high_array = {math.floor(high_score/1000), math.floor(high_score%1000/100), math.floor(high_score%100/10), 0}
 end
 
 
@@ -80,7 +92,7 @@ function love.update(dt)
     if love.keyboard.isDown(" ") and ball_vel == Vector(0, 0) then
         pause = false
         if game_over == true then
-            points = -1
+            points = -10
             balls = 3
             score()
             game_over = false
@@ -89,6 +101,9 @@ function love.update(dt)
         ball_vel = start_vel
     end
     if love.keyboard.isDown("escape") then
+        hs_file:open("w")
+        hs_file:write(high_score)
+        hs_file:close()
         love.event.quit()
     end
     
@@ -124,14 +139,17 @@ function love.update(dt)
     end
     
     --[[ Game Over ]]--
-    if balls < 0 then
+    if balls < 0 and game_over == false then
+        hs_file:open("w")
+        hs_file:write(high_score)
+        hs_file:close()
         game_over = true
         pause = true
     end
     
     --[[ Position Ball ]]--
     local speed_inc = 20
-    local speed = (200 + (math.floor(points / 5) * speed_inc)) * dt
+    local speed = (200 + (math.floor(points / 50) * speed_inc)) * dt
     for i = 1, #ball_pos-1, 1 do
         ball_pos[i] = ball_pos[i+1]
     end
@@ -180,8 +198,8 @@ function love.draw()
 end
 
 function score()
-    points = points + 1
-    point_array = {math.floor(points/1000), math.floor(points/100), math.floor(points/10), math.floor(points%10)}
+    points = points + 10
+    point_array = {math.floor(points/1000), math.floor(points%1000/100), math.floor(points%100/10), 0}
     
     if points > high_score then
         high_score = points
