@@ -34,7 +34,7 @@ function love.load()
     
     -- Sounds generated with Bfxr. ( http://www.bfxr.net/ )
     bounce = love.audio.newSource("bounce.wav", "static")
-    miss =  love.audio.newSource("crash.wav", "static")
+    crash =  love.audio.newSource("crash.wav", "static")
     
     --[[ Text Image Quads ]]--
     -- Anonymous Pro font used for text graphics. ( http://www.marksimonson.com/fonts/view/anonymous-pro )
@@ -53,6 +53,8 @@ function love.load()
     game_over = false
     
     pad_y = 290
+    hit_step = 0
+    miss_step = 0
     
     ball_pos = {}
     for i = 1, 4, 1 do
@@ -118,20 +120,23 @@ function love.update(dt)
         love.audio.play(bounce)
     elseif ball_pos[4].x < -50 or ball_pos[4].x > 850 then
         balls = balls - 1
+        miss_step = 20
         pause = true
         for i = 1, #ball_pos, 1 do
             ball_pos[i] = Vector(400, 320)
         end
         ball_vel = Vector(0, 0)
-        love.audio.play(miss)
+        love.audio.play(crash)
     elseif (ball_pos[4].x < 55 and ball_pos[4].x > 35) and (ball_pos[4].y > pad_y and ball_pos[4].y < pad_y + 60) then
         score()
+        hit_step = 10
         ball_pos[4].x = 60
         ball_vel = Vector(1, (ball_pos[4].y-(pad_y+30))/15):normalized()
         if ball_vel.y == 0 then ball_vel.y = 0.01 end
         love.audio.play(bounce)
     elseif (ball_pos[4].x > 745 and ball_pos[4].x < 765) and (ball_pos[4].y > pad_y and ball_pos[4].y < pad_y + 60) then
         score()
+        hit_step = 10
         ball_pos[4].x = 740
         ball_vel = Vector(-1, (ball_pos[4].y-(pad_y+30))/15):normalized()
         if ball_vel.y == 0 then ball_vel.y = 0.01 end
@@ -156,14 +161,15 @@ function love.update(dt)
     ball_pos[4] = ball_pos[4] + ball_vel * speed
 end
 
+
 function love.draw()
     --[[ Borders ]]--
-    love.graphics.setColor(160, 170, 170)
+    miss()
     love.graphics.rectangle("fill", 0, 0, 800, 55)
     love.graphics.rectangle("fill", 0, 585, 800, 15)
 
     --[[ Pads ]]--
-    love.graphics.setColor(240, 235, 100)
+    hit()
     love.graphics.rectangle("fill", 40, pad_y, 10, 60)
     love.graphics.rectangle("fill", 750, pad_y, 10, 60)
 
@@ -179,6 +185,7 @@ function love.draw()
     end
     
     if game_over == true then
+        love.graphics.setColor(255, 0, 0)
         love.graphics.draw(img, game_over_label, 290, 150)
     end
     
@@ -197,6 +204,7 @@ function love.draw()
     end
 end
 
+
 function score()
     points = points + 10
     point_array = {math.floor(points/1000), math.floor(points%1000/100), math.floor(points%100/10), 0}
@@ -204,5 +212,30 @@ function score()
     if points > high_score then
         high_score = points
         high_array = point_array
+    end
+end
+
+
+function miss()
+    if miss_step > 0 then
+        local n = love.math.random(1, 2)
+        if n == 1 then
+            love.graphics.setColor(255, 0, 0)
+        else
+            love.graphics.setColor(240, 240, 100)
+        end
+        miss_step = miss_step - 1
+    else
+        love.graphics.setColor(160, 170, 170)
+    end
+end
+
+
+function hit()
+    if hit_step > 0 then
+        --love.graphics.setColor(240, 240, 100)
+        -- 80, 70, -70
+        love.graphics.setColor(160+(hit_step*8), 170+(hit_step*7), 170-(hit_step*7))
+        hit_step = hit_step - 1
     end
 end
